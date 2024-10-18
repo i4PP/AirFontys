@@ -1,0 +1,23 @@
+﻿spring.application.name=authentication
+
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+## Hibernate properties
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.open-in-view=false
+
+## jwt properties
+security.jwt.secret-key=
+security.jwt.expiration-time=
+
+## peper
+security.password.pepper=
+
+## RT
+refresh.token.Duration=
+
+
+## cors
+cors.origin=

@@ -1,0 +1,29 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bgPrimary-color {
+  background-color: #663366;
+}
+
+.bgPrimary-color-hover:hover {
+  background-color: #442244;
+}
+
+.bgPrimary-color-hover-light:hover {
+    background-color: #884488;
+}
+
+.Primary-color {
+  color: #663366;
+}
+
+.hovercolor:hover {
+  color: #442244
+}
+
+.bgPrimary-color-light {
+  background-color: #884488;
+}
+
+

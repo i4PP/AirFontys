@@ -1,0 +1,10 @@
+﻿spring.application.name=Flight API
+
+cors.origin=
+
+aviationstack.access_key=
+
+server.port=
+
+
+
