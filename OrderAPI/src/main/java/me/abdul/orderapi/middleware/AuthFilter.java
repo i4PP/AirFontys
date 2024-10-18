@@ -32,8 +32,7 @@ public class AuthFilter extends OncePerRequestFilter {
         if (authToken != null) {
             handleAuthentication(authToken, request, response);
             filterChain.doFilter(request, response);
-        }
-        else {
+        } else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
@@ -58,8 +57,7 @@ public class AuthFilter extends OncePerRequestFilter {
 
         if (!jwtService.isTokenValid(authToken)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-        else {
+        } else {
             String user = jwtService.extractClaim(authToken, Claims::getSubject);
             UsernamePasswordAuthenticationToken auth =
                     new UsernamePasswordAuthenticationToken(user , null, null);

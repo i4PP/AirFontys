@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class  Aircraft{
-    public String modelCode;
-    public String modelText;
+public class  Aircraft {
+    private String modelCode;
+    private String modelText;
+
 }

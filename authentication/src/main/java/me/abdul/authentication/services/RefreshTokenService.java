@@ -48,8 +48,7 @@ public class RefreshTokenService {
             List<RefreshToken> refreshTokens = refreshTokenRepository.findByUserId(token.getUser().getId()).orElseThrow();
             refreshTokens.forEach(refreshToken -> refreshToken.setReuseFlag(true));
             refreshTokenRepository.saveAll(refreshTokens);
-        }
-        else {
+        } else {
             token.setUsed(true);
             refreshTokenRepository.save(token);
         }

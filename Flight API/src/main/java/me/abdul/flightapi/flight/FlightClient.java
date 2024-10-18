@@ -47,7 +47,7 @@ public class FlightClient {
 
         try {
             AirportResponse response = restTemplate.getForObject(url, AirportResponse.class);
-            if (response == null ) {
+            if (response == null) {
                 throw new FlightServiceException("No airports found for the given IATA code");
             }
             Airport[] airports = response.data;

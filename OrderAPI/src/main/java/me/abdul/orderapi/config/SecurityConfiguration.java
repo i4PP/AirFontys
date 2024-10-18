@@ -19,10 +19,10 @@ public class SecurityConfiguration {
     @Value("${cors.origin}")
     private String corsOrigin;
 
-    private final AuthFilter AuthFilter;
+    private final AuthFilter authFilter;
 
-    public SecurityConfiguration(AuthFilter AuthFilter) {
-        this.AuthFilter = AuthFilter;
+    public SecurityConfiguration(AuthFilter authFilter) {
+        this.authFilter = authFilter;
     }
 
     @Bean
@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(AuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
