@@ -21,9 +21,6 @@ jobs:
           JAVA_FILE_NAME: checkstyle.xml
           LANGUAGE: "java,javascript,typescript"
           VALIDATE_JAVA: true
-          VALIDATE_JAVASCRIPT_PRETTIER: true
-          VALIDATE_TYPESCRIPT_PRETTIER: true
-          VALIDATE_TYPESCRIPT_STANDARD: true
           VALIDATE_GITLEAKS: true
 
 
