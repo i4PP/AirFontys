@@ -47,7 +47,6 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import user from "../localStorage/userStorage.ts";
 import router from "../router";
 

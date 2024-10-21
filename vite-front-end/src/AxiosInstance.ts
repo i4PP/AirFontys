@@ -1,4 +1,4 @@
-﻿import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
+﻿import axios, { AxiosInstance } from "axios";
 import user from "./localStorage/userStorage.ts";
 import router from "./router";
 

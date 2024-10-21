@@ -1,6 +1,5 @@
 ﻿<script setup lang="ts">
 import { ref, computed } from 'vue'
-import axios from 'axios'
 import user from '../../localStorage/userStorage.ts'
 import router from '../../router'
 import {createApi} from "../../AxiosInstance.ts";
