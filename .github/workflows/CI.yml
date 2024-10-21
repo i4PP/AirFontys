@@ -48,3 +48,27 @@ jobs:
 
       - name: Build ${{ matrix.service }}
         run: mvn clean package --file "${{ matrix.service }}/pom.xml"
+
+  build-frontend:
+      runs-on: ubuntu-latest
+  
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+  
+        - name: Set up Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '18' 
+  
+        - name: Install dependencies
+          run: npm ci --prefix vite-front-end/
+  
+       # - name: Run Lint for Frontend
+        #  run: npm run lint --prefix path/to/your/frontend
+  
+       # - name: Run Tests for Frontend
+        #  run: npm run test --prefix path/to/your/frontend
+  
+        - name: Build Frontend
+          run: npm run build --prefix vite-front-end/
