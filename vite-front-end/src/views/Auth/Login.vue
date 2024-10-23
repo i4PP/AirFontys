@@ -14,7 +14,7 @@ const login = async () => {
   error.value = null
   loading.value = true
 
-  api.post<User>('/auth/login', {
+  api.post<user>('/auth/login', {
     email: email.value,
     password: password.value
   })

@@ -54,7 +54,7 @@ const register = async () => {
     return
   }
 
-  api.post<User>('/auth/register', {
+  api.post<user>('/auth/register', {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value,

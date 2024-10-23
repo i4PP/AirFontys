@@ -10,7 +10,7 @@ import {createApi} from "../AxiosInstance.ts";
 const depAirport = ref( '');
 const arrAirport = ref('');
 const depDate = ref('');
-const flights = ref<FlightData>([]);
+const flights = ref<FlightData[]>([]);
 const error = ref(null);
 const loading = ref(false);
 const api = createApi(import.meta.env.VITE_FLIGHTS_API_URL);

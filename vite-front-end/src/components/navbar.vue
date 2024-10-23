@@ -17,7 +17,7 @@
         <li v-if="user" class="relative group">
           <!-- User Name with Hover Dropdown -->
           <div class="text-gray-800 dark:text-gray-100 text-lg font-semibold transition-colors duration-300 cursor-pointer ">
-            {{ user.firstName }} {{ user.lastName }}
+            {{ user.value.firstName }} {{ user.value.lastName }}
           </div>
           <ul
               class="absolute right-0 mt-2 w-40 bg-white  rounded-lg shadow-lg border border-purple-800  opacity-0 group-hover:opacity-100 group-hover:translate-y-1 transition-all duration-300 transform invisible group-hover:visible z-10"
@@ -53,7 +53,7 @@ import router from "../router";
 
 
 const logout = () => {
-  user.clear();
+  user.value = null;
   router.push('/login');
 };
 </script>

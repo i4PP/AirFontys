@@ -3,5 +3,15 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
+    "importsNotUsedAsValues": "preserve",
+    "preserveValueImports": true,
+    "alwaysStrict": true,
+    "skipLibCheck": true
+  }
 }
