@@ -1,4 +1,4 @@
-﻿type Arrival = {
+﻿export type Arrival = {
     iataCode: string
     icaoCode: string
     terminal: string

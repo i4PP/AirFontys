@@ -1,4 +1,4 @@
-﻿type Flight= {
+﻿export type Flight= {
     number: string
     iataNumber: string
     icaoNumber: string

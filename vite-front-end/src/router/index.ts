@@ -1,8 +1,13 @@
-﻿import { createRouter, createWebHistory} from "vue-router";
+﻿import {createRouter, createWebHistory} from "vue-router";
 import Flights from "../views/Flights.vue";
 import Login from "../views/Auth/Login.vue";
 import user from '../localStorage/userStorage.ts'
 import Register from '../views/Auth/Register.vue'
+
+
+type Next = (route?: string) => void;
+
+
 
 const routes = [
     {
@@ -21,7 +26,7 @@ const routes = [
         meta: {
             hideNav: true,
         },
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (to: Next, from : Next, next : Next) => {
             if (user.value) {
                 next("/");
             } else {
@@ -34,7 +39,7 @@ const routes = [
         name: "register",
         component: Register,
         meta: { hideNav: true },
-        beforeEnter: (to, from, next) => {
+        beforeEnter: (to: Next, from : Next, next : Next) => {
             if (user.value) {
                 next("/");
             } else {
