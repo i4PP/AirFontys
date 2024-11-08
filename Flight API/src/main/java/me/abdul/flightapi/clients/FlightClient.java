@@ -7,7 +7,6 @@ import me.abdul.flightapi.entities.FlightsResponseEntity.Airport;
 import me.abdul.flightapi.entities.FlightsResponseEntity.AirportResponse;
 import me.abdul.flightapi.entities.FlightsResponseEntity.FlightData;
 import me.abdul.flightapi.entities.FlightsResponseEntity.FlightResponse;
-import me.abdul.flightapi.entities.flightTrackingEntity.FlightTracking;
 import me.abdul.flightapi.entities.flightTrackingEntity.FlightTrackingResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

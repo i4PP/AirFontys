@@ -1,9 +1,6 @@
 package me.abdul.flightapi.entities.flightTrackingEntity;
 
-import me.abdul.flightapi.entities.FlightsResponseEntity.Aircraft;
-import me.abdul.flightapi.entities.FlightsResponseEntity.Arrival;
-import me.abdul.flightapi.entities.FlightsResponseEntity.Departure;
-import me.abdul.flightapi.entities.FlightsResponseEntity.Flight;
+
 
 public class FlightTrackingData {
     public String flight_date;
