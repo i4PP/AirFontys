@@ -3,6 +3,7 @@ import {onMounted, ref} from 'vue'
 import user from '../../localStorage/userStorage.ts'
 import router from "../../router";
 import {createApi} from "../../AxiosInstance.ts";
+import {User} from "../../entities/User.ts";
 
 
 
@@ -16,7 +17,7 @@ const login = async () => {
   error.value = null
   loading.value = true
 
-  api.post<user>('/auth/login', {
+  api.post<User>('/auth/login', {
     email: email.value,
     password: password.value
   })

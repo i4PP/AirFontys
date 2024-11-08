@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import user from '../../localStorage/userStorage.ts'
 import router from '../../router'
 import {createApi} from "../../AxiosInstance.ts";
+import {User} from "../../entities/User.ts";
 
 // Form fields
 const firstName = ref('')
@@ -54,7 +55,7 @@ const register = async () => {
     return
   }
 
-  api.post<user>('/auth/register', {
+  api.post<User>('/auth/register', {
     firstName: firstName.value,
     lastName: lastName.value,
     email: email.value,

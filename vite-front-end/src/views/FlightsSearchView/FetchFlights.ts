@@ -1,6 +1,6 @@
 ﻿import { AxiosInstance } from 'axios';
-import { FlightData } from '../entities/Flight/FlightData';
-import { Error } from '../entities/Error';
+import  { FlightData } from '../../entities/Flight/FlightData.ts';
+import  { Error } from '../../entities/Error';
 
 
 interface FetchFlightsParams {
