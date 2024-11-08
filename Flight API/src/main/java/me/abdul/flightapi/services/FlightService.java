@@ -1,7 +1,12 @@
-package me.abdul.flightapi.flight;
+package me.abdul.flightapi.services;
 
 import me.abdul.flightapi.customExceptions.FlightNotFoundException;
 import me.abdul.flightapi.customExceptions.FlightServiceException;
+import me.abdul.flightapi.entities.FlightsResponseEntity.Airport;
+import me.abdul.flightapi.entities.FlightsResponseEntity.FlightData;
+import me.abdul.flightapi.clients.FlightClient;
+import me.abdul.flightapi.entities.FlightsResponseEntity.FlightResponse;
+import me.abdul.flightapi.entities.flightTrackingEntity.FlightTrackingResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +20,7 @@ import static java.lang.Math.round;
 public class FlightService {
 
     private final FlightClient flightClient;
+
 
     public FlightService(FlightClient flightClient) {
         this.flightClient = flightClient;
@@ -94,6 +100,17 @@ public class FlightService {
 
     private double haversine(double val) {
         return Math.pow(Math.sin(val / 2), 2);
+    }
+
+
+
+    public int getActiveFlightsCount() {
+        FlightResponse flightResponse = flightClient.fetchActiveFlightNow().orElseThrow(() -> new FlightNotFoundException("No active flights found"));
+        return flightResponse.pagination.getTotal();
+    }
+
+    public Optional<FlightTrackingResponse> getFlightTracking(String flightNumber, String date) {
+        return flightClient.fetchFlightStatus(flightNumber, date);
     }
 }
 

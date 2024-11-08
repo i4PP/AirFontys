@@ -1,8 +1,10 @@
 ﻿<script setup lang="ts">
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import user from '../../localStorage/userStorage.ts'
 import router from "../../router";
 import {createApi} from "../../AxiosInstance.ts";
+
+
 
 const email = ref('')
 const password = ref('')
@@ -24,6 +26,9 @@ const login = async () => {
       })
       .catch(err => {
         console.error(err)
+        if(err.message === 'Network Error') {
+          error.value = 'A network error occurred. Please try again later.'
+        } else
         if (err.response.status === 401) {
           error.value = 'Invalid email or password'
         } else {
@@ -35,6 +40,7 @@ const login = async () => {
         loading.value = false
       })
 }
+
 </script>
 
 <template>
@@ -100,13 +106,14 @@ const login = async () => {
         <div class="flex justify-center items-center mt-4">
           <p class="text-sm text-gray-500">Don't have an account?</p>
           <router-link
-          to="register"
-          type="button"
-          class="ml-2 text-sm font-semibold textPrimary-color hover:textPrimary-color-hover-light"
+              to="register"
+              type="button"
+              class="ml-2 text-sm font-semibold hovercolor transform transition-transform duration-200 "
           >
-          Register
+            Register
           </router-link>
         </div>
+
       </form>
     </div>
   </div>

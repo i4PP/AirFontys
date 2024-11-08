@@ -1,11 +1,11 @@
 ﻿import {createRouter, createWebHistory} from "vue-router";
-import Flights from "../views/Flights.vue";
+import Flights from "../views/FlightsSearchView/Flights.vue";
 import Login from "../views/Auth/Login.vue";
 import user from '../localStorage/userStorage.ts'
 import Register from '../views/Auth/Register.vue'
+import FlightCounter from "../views/FlightCounter.vue";
+import FlightTracker from "../views/FlightTracker.vue";
 
-
-type Next = (route?: string) => void;
 
 
 
@@ -26,7 +26,7 @@ const routes = [
         meta: {
             hideNav: true,
         },
-        beforeEnter: (to: Next, from : Next, next : Next) => {
+        beforeEnter: (to, from ,next) => {
             if (user.value) {
                 next("/");
             } else {
@@ -39,12 +39,28 @@ const routes = [
         name: "register",
         component: Register,
         meta: { hideNav: true },
-        beforeEnter: (to: Next, from : Next, next : Next) => {
+        beforeEnter: (to, from ,next) => {
             if (user.value) {
                 next("/");
             } else {
                 next();
             }
+        }
+    },
+    {
+        path: "/LiveFlights",
+        name: "LiveFlights",
+        component: FlightCounter,
+        beforeEnter: (to, from ,next) => {
+            next();
+        }
+    },
+    {
+        path: "/TrackFlight",
+        name: "TrackFlight",
+        component: FlightTracker,
+        beforeEnter: (to, from ,next) => {
+            next();
         }
     }
 ]

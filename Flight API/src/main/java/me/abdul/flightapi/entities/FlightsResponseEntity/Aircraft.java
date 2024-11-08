@@ -1,4 +1,4 @@
-package me.abdul.flightapi.flight;
+package me.abdul.flightapi.entities.FlightsResponseEntity;
 
 
 import lombok.Getter;

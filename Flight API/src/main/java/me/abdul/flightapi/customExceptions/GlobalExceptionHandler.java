@@ -15,6 +15,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(SocketException.class)
+    public ResponseEntity<Object> handleSocketException(SocketException ex, WebRequest request) {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        body.put("error", "Socket Error");
+        body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false));
+
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     // Handle custom FlightNotFoundException
     @ExceptionHandler(FlightNotFoundException.class)
     public ResponseEntity<Object> handleFlightNotFoundException(FlightNotFoundException ex, WebRequest request) {

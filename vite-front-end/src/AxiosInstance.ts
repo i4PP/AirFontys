@@ -26,7 +26,7 @@ api.interceptors.response.use((response) => {
             console.error(error);
         });
     }
-    if (error.response.status === 401  && error.response.config.url !== '/auth/login' && error.response.config.url !== '/auth/logout') {
+    if (error.response.status === 403  && error.response.config.url !== '/auth/login' && error.response.config.url !== '/auth/logout') {
         api.post("/auth/refresh", {}, {
         }).then(() => {
 

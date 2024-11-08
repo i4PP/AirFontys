@@ -1,4 +1,4 @@
-package me.abdul.flightapi.flight;
+package me.abdul.flightapi.controllers;
 
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import me.abdul.flightapi.entities.FlightsResponseEntity.FlightData;
+import me.abdul.flightapi.services.FlightService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

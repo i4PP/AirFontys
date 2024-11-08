@@ -1,12 +1,20 @@
-package me.abdul.flightapi.flight;
+package me.abdul.flightapi.clients;
 
 
 import me.abdul.flightapi.customExceptions.FlightNotFoundException;
 import me.abdul.flightapi.customExceptions.FlightServiceException;
+import me.abdul.flightapi.entities.FlightsResponseEntity.Airport;
+import me.abdul.flightapi.entities.FlightsResponseEntity.AirportResponse;
+import me.abdul.flightapi.entities.FlightsResponseEntity.FlightData;
+import me.abdul.flightapi.entities.FlightsResponseEntity.FlightResponse;
+import me.abdul.flightapi.entities.flightTrackingEntity.FlightTracking;
+import me.abdul.flightapi.entities.flightTrackingEntity.FlightTrackingResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -18,6 +26,7 @@ public class FlightClient {
     private String ACCESS_KEY;
 
     private final RestTemplate restTemplate;
+
 
     public FlightClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -63,6 +72,44 @@ public class FlightClient {
             throw e;
         } catch (Exception e) {
             throw new FlightServiceException("Error fetching airport from API: " + e.getMessage());
+        }
+    }
+
+    public Optional<FlightResponse> fetchActiveFlightNow(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = LocalDate.now().format(formatter);
+        String url = String.format("%sflights?access_key=%s&flight_date=%s&flight_status=active",
+                API_URL, ACCESS_KEY, formattedDate);
+
+        try {
+            FlightResponse response = restTemplate.getForObject(url, FlightResponse.class);
+            if (response == null) {
+                throw new FlightNotFoundException("No active flights found");
+            }
+            return Optional.of(response);
+
+        } catch (FlightNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new FlightServiceException("Error fetching active flights from API: " + e.getMessage());
+        }
+    }
+
+    public Optional<FlightTrackingResponse> fetchFlightStatus(String flightNumber, String date){
+        String url = String.format("%sflights?access_key=%s&flight_iata=%s&flight_date=%s",
+                API_URL, ACCESS_KEY, flightNumber, date);
+
+        try {
+            FlightTrackingResponse response = restTemplate.getForObject(url, FlightTrackingResponse.class);
+            if (response == null) {
+                throw new FlightNotFoundException("No flight found for the given flight number and date");
+            }
+            return Optional.of(response);
+
+        } catch (FlightNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new FlightServiceException("Error fetching flight status from API: " + e.getMessage());
         }
     }
 }
