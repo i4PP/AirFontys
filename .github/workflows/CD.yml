@@ -33,7 +33,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build Docker Image
-      run: docker build -t abdulqal/fontys-air:${{ matrix.image-name }} "./${{ matrix.service }}"
+      run: docker build -t abdulqal/${{ matrix.image-name }} "./${{ matrix.service }}"
 
     - name: Log in to Docker Hub
       env:
@@ -41,4 +41,4 @@ jobs:
       run: echo "$DOCKER_ACCESS_TOKEN" | docker login -u abdulqal --password-stdin
 
     - name: Push Docker Image
-      run: docker push abdulqal/fontys-air:${{ matrix.image-name }}
+      run: docker push abdulqal/${{ matrix.image-name }}
