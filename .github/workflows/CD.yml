@@ -25,13 +25,13 @@ jobs:
 
     - name: Install dependencies and build front-end
       run: |
-        cd ./front-end # Adjust if your front-end code is in a different directory
+        cd ./vite-front-end
         npm install
         npm run build
 
     - name: Build Docker Image for Vite Front-end
       run: |
-        cd ./front-end
+        cd ./vite-front-end
         docker build -t abdulqal/vite-front-end:latest .
 
     - name: Log in to Docker Hub
@@ -49,7 +49,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - service: "FlightAPI"
+          - service: "Flight API"
             image-name: "flight-api"
           - service: "authentication"
             image-name: "auth"
