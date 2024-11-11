@@ -14,7 +14,7 @@ RUN mvn clean package -DskipTests
 FROM openjdk:22-jdk
 
 #Copy the built .jar file from the build stage
-COPY --from=build /app/target/flight-api-0.0.1-SNAPSHOT.jar /app/app.jar
+COPY --from=build /app/target/FlightAPI-0.0.1-SNAPSHOT.jar /app/app.jar
 
 WORKDIR /app
 
