@@ -16,11 +16,11 @@ jobs:
       matrix:
         include:
           - service: "Flight API"
-            image-name: "flight-api-latest"
+            image-name: "flight-api"
           - service: "authentication"
-            image-name: "auth-latest"
+            image-name: "auth"
           - service: "OrderAPI"
-            image-name: "orderapi-Latest"
+            image-name: "orderapi"
 
     steps:
     - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
         distribution: 'temurin'
 
     - name: Build Docker Image
-      run: docker build -t abdulqal/${{ matrix.image-name }} "./${{ matrix.service }}"
+      run: docker build -t abdulqal/${{ matrix.image-name }}:latest "./${{ matrix.service }}"
 
     - name: Log in to Docker Hub
       env:
