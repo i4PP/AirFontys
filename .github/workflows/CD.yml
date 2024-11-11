@@ -20,7 +20,7 @@ jobs:
           - service: "authentication"
             image-name: "auth-latest"
           - service: "OrderAPI"
-            image-name: "OrderAPI-Latest"
+            image-name: "orderapi-Latest"
 
     steps:
     - name: Checkout code
