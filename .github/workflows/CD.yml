@@ -14,14 +14,13 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
-        service:
-          - "Flight API"
-          - "authentication"
-          - "OrderAPI"
-        image-name:
-          - "flight-api-latest"
-          - "auth-latest"
-          - "OrderAPI-Latest"
+        include:
+          - service: "Flight API"
+            image-name: "flight-api-latest"
+          - service: "authentication"
+            image-name: "auth-latest"
+          - service: "OrderAPI"
+            image-name: "OrderAPI-Latest"
 
     steps:
     - name: Checkout code
