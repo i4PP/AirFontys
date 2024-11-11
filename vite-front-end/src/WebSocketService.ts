@@ -1,6 +1,4 @@
-﻿// WebSocketService.ts
-
-import { createApi } from "./AxiosInstance.ts";
+﻿import { createApi } from "./AxiosInstance.ts";
 import router from "./router";
 import user from "./localStorage/userStorage.ts";
 
@@ -9,10 +7,12 @@ export class WebSocketService {
     private retryCount = 0;
     private maxRetries = 3;
     private endpoint: string;
+    private canSend: boolean; // Add this to track if the instance can send messages
     private api = createApi(import.meta.env.VITE_AUTH_API_URL);
 
-    constructor(endpoint: string) {
+    constructor(endpoint: string, canSend: boolean = false) {
         this.endpoint = endpoint;
+        this.canSend = canSend;
     }
 
     connectWebSocket(
@@ -26,6 +26,7 @@ export class WebSocketService {
             console.log('WebSocket connection opened');
             this.retryCount = 0;
             console.log('retryCount:', this.retryCount);
+            if (onOpen) onOpen();
         };
 
         this.websocket.onmessage = (event: MessageEvent) => {
@@ -39,7 +40,6 @@ export class WebSocketService {
         this.websocket.onerror = async (error: Event) => {
             console.error('WebSocket error:', error);
             onError(error);
-            console.log('retryCount:', this.retryCount);
             this.retryCount++;
             await this.handleTokenRefresh();
         };
@@ -57,11 +57,21 @@ export class WebSocketService {
         };
     }
 
+    // Only define this function if canSend is true
+    sendMessage(message: any) {
+        if (this.canSend && this.websocket && this.websocket.readyState === WebSocket.OPEN) {
+            this.websocket.send(JSON.stringify(message));
+        } else if (!this.canSend) {
+            console.error('WebSocketService instance is in read-only mode and cannot send messages.');
+        } else {
+            console.error('WebSocket is not open. Cannot send message.');
+        }
+    }
+
     async handleTokenRefresh() {
         try {
             await this.api.post('/auth/refresh');
             console.log('Token refreshed successfully');
-            this.retryCount++;
         } catch (err) {
             console.error('Failed to refresh token:', err);
             await this.api.post('/auth/logout');

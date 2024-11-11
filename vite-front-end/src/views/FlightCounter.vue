@@ -15,7 +15,7 @@ import { WebSocketService } from '../WebSocketService';
 
 const isLoading = ref(true);
 const wsData = ref(null);
-const webSocketService = new WebSocketService('ws://localhost:8082/ws/flights');
+const webSocketService = new WebSocketService('ws://localhost:8082/ws/flights', false);
 
 function handleWebSocketMessage(data: any) {
   wsData.value = data; // Process data as required

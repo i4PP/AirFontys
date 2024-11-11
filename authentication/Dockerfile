@@ -1,20 +1,22 @@
-﻿# Use an official OpenJDK image as a parent image
-FROM openjdk:21-jdk
+﻿#Build stage
+FROM maven:3.9.9-amazoncorretto-21 AS build
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the local files to the container
-COPY . .
+#Copy the pom.xml and source files
+COPY pom.xml .
+COPY src ./src
 
-# Grant execution permissions to the mvnw script
-RUN chmod +x ./mvnw
+#Run the build command
+RUN mvn clean package -DskipTests
 
-# Package the application
-RUN ./mvnw clean package
+#Runtime stage
+FROM openjdk:22-jdk
 
-# Expose the port the application runs on
-EXPOSE 8081
+#Copy the built .jar file from the build stage
+COPY --from=build /app/target/authentication-0.0.1-SNAPSHOT.jar /app/app.jar
 
-# Run the application
-CMD ["java", "-jar", "target/authentication-0.0.1-SNAPSHOT.jar"]
+WORKDIR /app
+
+#Run the application
+CMD ["java", "-jar", "app.jar"]
