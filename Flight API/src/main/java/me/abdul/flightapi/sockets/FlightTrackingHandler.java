@@ -53,29 +53,81 @@ public class FlightTrackingHandler extends TextWebSocketHandler {
         }
     }
 
-
-
     @Scheduled(fixedRate = 10000)
     public void sendFlightData() {
         ObjectMapper mapper = new ObjectMapper();
 
+        // Mock data JSON string
+        String mockJson = """
+        {
+            "pagination": {
+                "total": 1
+            },
+            "data": [
+                {
+                    "flight_date": "2024-11-04",
+                    "flight_status": "active",
+                    "departure": {
+                        "airport": "Hamburg Airport",
+                        "timezone": "Europe/Berlin",
+                        "iata": "HAM",
+                        "icao": "EDDH",
+                        "delay": 8,
+                        "scheduled": 1730725200000,
+                        "estimated": 1730725200000,
+                        "actual": 1730725680000,
+                        "estimated_runway": 1730725680000,
+                        "actual_runway": 1730725680000
+                    },
+                    "arrival": {
+                        "airport": "Castellon",
+                        "timezone": "Europe/Madrid",
+                        "iata": "CDT",
+                        "icao": "LECH",
+                        "delay": 1,
+                        "scheduled": 1730734800000,
+                        "estimated": 1730734800000
+                    },
+                    "airline": {
+                        "name": "Eurowings",
+                        "iata": "EW",
+                        "icao": "EWG"
+                    },
+                    "flight": {
+                        "number": "6969",
+                        "iata": "EW6969",
+                        "icao": "EWG6969"
+                    },
+                    "aircraft": {
+                        "registration": "9H-MLS",
+                        "iata": "A320",
+                        "icao": "A320",
+                        "icao24": "4D23A2"
+                    },
+                    "live": {
+                        "updated": 1730725362000,
+                        "latitude": 49.2818,
+                        "longitude": 4.2627,
+                        "altitude": 11887.2,
+                        "direction": 243.0,
+                        "speed_horizontal": 779.692,
+                        "speed_vertical": 0,
+                        "is_ground": false
+                    }
+                }
+            ]
+        }
+        """;
+
         for (WebSocketSession session : sessions) {
-            String flightNumber = (String) session.getAttributes().get("flightNumber");
-            String date = (String) session.getAttributes().get("date");
-
-            if (flightNumber == null || date == null) {
-                continue;
-            }
-
             try {
-                FlightTrackingResponse response = flightService.getFlightTracking(flightNumber, date)
-                        .orElseThrow(() -> new SocketException("Flight not found for " + flightNumber));
-
+                // Map the mock JSON data to FlightTrackingResponse class
+                FlightTrackingResponse response = mapper.readValue(mockJson, FlightTrackingResponse.class);
                 String responseJson = mapper.writeValueAsString(response);
+
+                // Send the mock response to the client
                 session.sendMessage(new TextMessage(responseJson));
 
-            } catch (SocketException e) {
-                sendErrorMessage(session, "Flight not found");
             } catch (IOException e) {
                 sendErrorMessage(session, "Failed to send flight data");
             }

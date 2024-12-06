@@ -40,21 +40,8 @@ export class WebSocketService {
         this.websocket.onerror = async (error: Event) => {
             console.error('WebSocket error:', error);
             onError(error);
-            this.retryCount++;
-            await this.handleTokenRefresh();
         };
 
-        this.websocket.onclose = () => {
-            console.log('WebSocket connection closed');
-            if (this.retryCount < this.maxRetries) {
-                setTimeout(() => this.connectWebSocket(onMessage, onError, onOpen), 2000);
-            } else {
-                console.error('Max retries reached. Closing WebSocket connection');
-                this.api.post('/auth/logout');
-                user.value = null;
-                router.push('/login');
-            }
-        };
     }
 
     // Only define this function if canSend is true

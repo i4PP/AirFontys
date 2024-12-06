@@ -1,7 +1,6 @@
 ﻿<template>
   <div v-if="flightData" class="bg-white shadow-lg rounded-lg p-4 w-full max-w-md mx-auto">
     <div>
-      <div class="text-xl font-semibold text-black">{{ flightData.airline.name }}</div>
       <div class="text-lg font-semibold text-gray-600">
         {{ flightData.departure.airport }} to {{ flightData.arrival.airport }}
       </div>
@@ -55,10 +54,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
-import { WebSocketService } from '../WebSocketService';
 
 const flightData = ref<any>(null);
-const webSocketService = new WebSocketService('ws://localhost:8082/ws/flights');
+const socket = ref<WebSocket | null>(null);
 
 // Reactive properties for computed values
 const departureTime = computed(() => flightData.value?.departure.scheduled ? new Date(flightData.value.departure.scheduled).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '');
@@ -91,23 +89,40 @@ function updateProgress() {
   }
 }
 
-function handleWebSocketMessage(data: any) {
-  flightData.value = data;
+function handleWebSocketMessage(event: MessageEvent) {
+  const data = JSON.parse(event.data);
+  console.log('Received flight data:', data); // Log the entire data for inspection
+  flightData.value = data.data[0]; // Ensure that you're setting the correct flight data
   updateProgress();
 }
+function connectWebSocket() {
+  socket.value = new WebSocket('ws://localhost:8082/ws/flight-tracking');
 
-function handleWebSocketError(error: Event) {
-  console.error('WebSocket error:', error);
+  socket.value.onopen = () => {
+    console.log('WebSocket connection opened');
+  };
+
+  socket.value.onmessage = handleWebSocketMessage;
+
+  socket.value.onerror = (error: Event) => {
+    console.error('WebSocket error:', error);
+  };
+
+  socket.value.onclose = () => {
+    console.warn('WebSocket connection closed, retrying in 5 seconds');
+    setTimeout(connectWebSocket, 5000); // Retry connection after 5 seconds
+  };
 }
 
 onMounted(() => {
-  webSocketService.connectWebSocket(handleWebSocketMessage, handleWebSocketError, () => {
-    console.log('WebSocket opened');
-  });
+  connectWebSocket();
 });
 
 onBeforeUnmount(() => {
-  webSocketService.closeWebSocket();
+  if (socket.value) {
+    socket.value.close();
+    console.log('WebSocket connection closed on component unmount');
+  }
 });
 </script>
 

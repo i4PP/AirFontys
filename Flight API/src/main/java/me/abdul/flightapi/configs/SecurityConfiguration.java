@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                                 ).permitAll()
                                 .requestMatchers("/flights/**").permitAll()
                                 .requestMatchers("/ws/flight-tracking").permitAll()
+                                .requestMatchers("/ws/flight-tracking").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
