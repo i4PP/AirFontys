@@ -1,4 +1,44 @@
 ﻿<template>
+  <h1 class="text-4xl font-bold mb-3 self-start">Live flight information</h1>
+  <div class="max-w-2xl mx-auto mt-5 mb-7 bg-white shadow-md rounded-lg p-5">
+    <div class="flex flex-col items-center ">
+      <Form  @submit.prevent="onSubmit"   class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex flex-col">
+          <label for="arrAirport" class="mb-2 font-medium text-gray-700">Flight Code</label>
+          <input
+              type="text"
+              name="flightCode"
+              v-model="flightCode"
+              class="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              placeholder="Enter arrival airport"
+              required
+          />
+          <Error-message name="arrAirport" class="text-red-500 h-0" />
+        </div>
+        <div class="flex flex-col">
+          <label for="depDate" class="mb-2 font-medium text-gray-700">Departure Date</label>
+          <input
+              type="date"
+              name="depDate"
+              v-model="depDate"
+              :min="new Date(new Date().setDate(new Date().getDate() + 40)).toISOString().split('T')[0]"
+              class="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              required
+          />
+          <ErrorMessage name="depDate" class="text-red-500 h-0" />
+        </div>
+        <div class="flex  items-end">
+          <button
+              type="submit"
+              class="w-full bgPrimary-color text-white font-semibold py-2 px-4 rounded-md bgPrimary-color-hover transition duration-150">
+            Search
+          </button>
+        </div>
+      </Form>
+    </div>
+  </div>
+
+
   <div v-if="flightData" class="bg-white shadow-lg rounded-lg p-4 w-full max-w-md mx-auto">
     <div>
       <div class="text-lg font-semibold text-gray-600">
@@ -53,7 +93,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { ref, onBeforeUnmount, computed } from 'vue';
+import {ErrorMessage} from "vee-validate";
+
+// Reactive states
+const flightCode = ref('');
+const depDate = ref('');
 
 const flightData = ref<any>(null);
 const socket = ref<WebSocket | null>(null);
@@ -95,11 +140,14 @@ function handleWebSocketMessage(event: MessageEvent) {
   flightData.value = data.data[0]; // Ensure that you're setting the correct flight data
   updateProgress();
 }
-function connectWebSocket() {
+
+function connectWebSocket(code: string, date: string) {
   socket.value = new WebSocket('ws://localhost:8082/ws/flight-tracking');
 
   socket.value.onopen = () => {
     console.log('WebSocket connection opened');
+    // Send the flight code and departure date to the backend
+    socket.value?.send(JSON.stringify({ flightCode: code, depDate: date }));
   };
 
   socket.value.onmessage = handleWebSocketMessage;
@@ -110,14 +158,19 @@ function connectWebSocket() {
 
   socket.value.onclose = () => {
     console.warn('WebSocket connection closed, retrying in 5 seconds');
-    setTimeout(connectWebSocket, 5000); // Retry connection after 5 seconds
+    setTimeout(() => connectWebSocket(code, date), 5000); // Retry connection
   };
 }
 
-onMounted(() => {
-  connectWebSocket();
-});
+function onSubmit() {
+  if (socket.value) {
+    socket.value.close();
+  }
+  connectWebSocket(flightCode.value, depDate.value);
+}
 
+
+// WebSocket cleanup
 onBeforeUnmount(() => {
   if (socket.value) {
     socket.value.close();
@@ -129,3 +182,4 @@ onBeforeUnmount(() => {
 <style scoped>
 /* Add additional styling here */
 </style>
+

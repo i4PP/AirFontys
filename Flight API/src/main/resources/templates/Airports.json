@@ -1,0 +1,38 @@
+{
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "count": 2,
+    "total": 2
+  },
+  "data": [
+    {
+      "airport_name": "John F. Kennedy International Airport",
+      "iata_code": "JFK",
+      "icao_code": "KJFK",
+      "latitude": "40.641766",
+      "longitude": "-73.780968",
+      "geoname_id": "5125771",
+      "timezone": "America/New_York",
+      "gmt": "-5",
+      "phone_number": "+1 718-244-4444",
+      "country_name": "United States",
+      "country_iso2": "US",
+      "city_iata_code": "JFK"
+    },
+    {
+      "airport_name": "Amsterdam Airport Schiphol",
+      "iata_code": "AMS",
+      "icao_code": "EHAM",
+      "latitude": "52.308613",
+      "longitude": "4.763889",
+      "geoname_id": "2756071",
+      "timezone": "Europe/Amsterdam",
+      "gmt": "+1",
+      "phone_number": "+31 20 794 0800",
+      "country_name": "Netherlands",
+      "country_iso2": "NL",
+      "city_iata_code": "AMS"
+    }
+  ]
+}

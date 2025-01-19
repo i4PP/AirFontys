@@ -15,6 +15,7 @@ describe('Register Page test', () => {
     beforeEach(() => {
         cy.visit('/register');
         cy.clearLocalStorage();
+
     });
 
     it('can register with matching passwords', () => {

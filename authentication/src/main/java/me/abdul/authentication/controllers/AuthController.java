@@ -37,7 +37,7 @@ public class AuthController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Successfully logged out user"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    @PostMapping("/logout")
+        @PostMapping("/logout")
     public ResponseEntity<String> logout(@CookieValue("refresh-token") String refreshToken) {
         RefreshToken token = refreshTokenService.findByToken(refreshToken)
                 .orElseThrow(() -> new InvalidRefreshTokenEception("Invalid refresh token"));
@@ -125,7 +125,7 @@ public class AuthController {
     private ResponseCookie createCookie(String name, String value) {
         return ResponseCookie.from(name, value)
                 .httpOnly(true)
-                .secure(true) // Change to true when using a valid SSL certificate
+                .secure(false) // Change to true when using a valid SSL certificate
                 .path("/")
                 .maxAge(3600)
                 .sameSite("Strict")

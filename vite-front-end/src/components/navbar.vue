@@ -25,7 +25,7 @@
           </div>
           <div>
             <router-link
-                to="/liveFlights"
+                to="/TrackFlight"
                 class="text-base font-semibold text-gray-700 dark:text-gray-100 hover:text-gray-300 transition-colors duration-150"
             >
               Flights tracker

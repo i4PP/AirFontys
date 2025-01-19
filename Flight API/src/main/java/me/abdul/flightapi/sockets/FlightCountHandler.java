@@ -34,7 +34,7 @@ public class FlightCountHandler extends TextWebSocketHandler {
         sessions.remove(session);
     }
 
-    @Scheduled(fixedRate = 500000000)
+    @Scheduled(fixedRate = 1000)
     public void broadcastFlightCount() {
         if (sessions.isEmpty()) {
             return;

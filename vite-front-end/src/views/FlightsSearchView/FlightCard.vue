@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="bg-gray-50 rounded-xl shadow-lg max-w-2xl mb-7 mx-auto p-6 space-y-6 transition-transform  hover:shadow-xl border border-gray-200">
+  <div class="bg-gray-50 rounded-xl shadow-lg max-w-2xl mb-7 mx-auto p-6 space-y-6 transition-transform  hover:shadow-xl border border-gray-200" data-testid="flight-card">
     <!-- Header Section with Flight Number and Price -->
     <div class="flex justify-between items-center">
       <h2 class="text-xl font-semibold text-gray-800">Flight {{ flight.flight.number }}</h2>

@@ -1,0 +1,134 @@
+{
+  "pagination": {
+    "limit": 100,
+    "offset": 0,
+    "count": 4,
+    "total": 4
+  },
+  "data": [
+    {
+      "weekday": "1",
+      "departure": {
+        "iataCode": "JFK",
+        "icaoCode": "KJFK",
+        "terminal": "4",
+        "gate": "B23",
+        "scheduledTime": "08:00"
+      },
+      "arrival": {
+        "iataCode": "AMS",
+        "icaoCode": "EHAM",
+        "terminal": "3",
+        "gate": "F2",
+        "scheduledTime": "22:00"
+      },
+      "aircraft": {
+        "modelCode": "B789",
+        "modelText": "Boeing 787-9 Dreamliner"
+      },
+      "airline": {
+        "name": "KLM Royal Dutch Airlines",
+        "iataCode": "KL",
+        "icaoCode": "KLM"
+      },
+      "flight": {
+        "number": "642",
+        "iataNumber": "KL642",
+        "icaoNumber": "KLM642"
+      }
+    },
+    {
+      "weekday": "2",
+      "departure": {
+        "iataCode": "JFK",
+        "icaoCode": "KJFK",
+        "terminal": "1",
+        "gate": "A15",
+        "scheduledTime": "15:30"
+      },
+      "arrival": {
+        "iataCode": "AMS",
+        "icaoCode": "EHAM",
+        "terminal": "1",
+        "gate": "D5",
+        "scheduledTime": "05:30"
+      },
+      "aircraft": {
+        "modelCode": "A333",
+        "modelText": "Airbus A330-300"
+      },
+      "airline": {
+        "name": "Delta Air Lines",
+        "iataCode": "DL",
+        "icaoCode": "DAL"
+      },
+      "flight": {
+        "number": "47",
+        "iataNumber": "DL47",
+        "icaoNumber": "DAL47"
+      }
+    },
+    {
+      "weekday": "5",
+      "departure": {
+        "iataCode": "JFK",
+        "icaoCode": "KJFK",
+        "terminal": "5",
+        "gate": "C12",
+        "scheduledTime": "18:00"
+      },
+      "arrival": {
+        "iataCode": "AMS",
+        "icaoCode": "EHAM",
+        "terminal": "2",
+        "gate": "B1",
+        "scheduledTime": "08:00"
+      },
+      "aircraft": {
+        "modelCode": "B772",
+        "modelText": "Boeing 777-200ER"
+      },
+      "airline": {
+        "name": "KLM Royal Dutch Airlines",
+        "iataCode": "KL",
+        "icaoCode": "KLM"
+      },
+      "flight": {
+        "number": "644",
+        "iataNumber": "KL644",
+        "icaoNumber": "KLM644"
+      }
+    },
+    {
+      "weekday": "6",
+      "departure": {
+        "iataCode": "JFK",
+        "icaoCode": "KJFK",
+        "terminal": "2",
+        "gate": "D8",
+        "scheduledTime": "22:45"
+      },
+      "arrival": {
+        "iataCode": "AMS",
+        "icaoCode": "EHAM",
+        "terminal": "3",
+        "gate": "F9",
+        "scheduledTime": "12:45"
+      },
+      "aircraft": {
+        "modelCode": "B77W",
+        "modelText": "Boeing 777-300ER"
+      },
+      "airline": {
+        "name": "Delta Air Lines",
+        "iataCode": "DL",
+        "icaoCode": "DAL"
+      },
+      "flight": {
+        "number": "49",
+        "iataNumber": "DL49",
+        "icaoNumber": "DAL49"
+      }
+    }
+  ]
+}
