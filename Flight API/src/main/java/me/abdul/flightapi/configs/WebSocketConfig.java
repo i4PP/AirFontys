@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class WebSocketConfig implements WebSocketConfigurer {
 
     private final FlightCountHandler flightCountHandler;
-    private final FlightTrackingHandler FlightTrackingHandler;
+    private final FlightTrackingHandler FlightTrackingHandler ;
 
     public WebSocketConfig(FlightCountHandler flightCountHandler, FlightTrackingHandler flightTrackingHandler) {
         this.flightCountHandler = flightCountHandler;
