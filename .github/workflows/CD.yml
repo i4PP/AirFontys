@@ -9,18 +9,52 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  # Job for building and pushing the Vite front-end
+  build-and-push-front-end:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18' # Set to the version you need
+
+    - name: Install dependencies and build front-end
+      run: |
+        cd ./vite-front-end
+        npm install
+        npm run build
+
+    - name: Build Docker Image for Vite Front-end
+      run: |
+        cd ./vite-front-end
+        docker build -t abdulqal/vite-front-end:latest .
+
+    - name: Log in to Docker Hub
+      env:
+        DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+      run: echo "$DOCKER_ACCESS_TOKEN" | docker login -u abdulqal --password-stdin
+
+    - name: Push Docker Image for Vite Front-end
+      run: docker push abdulqal/vite-front-end:latest
+
+  # Job for building and pushing back-end services
+  build-and-push-back-end:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
         include:
           - service: "Flight API"
-            image-name: "flight-api-latest"
+            image-name: "flight-api"
           - service: "authentication"
-            image-name: "auth-latest"
+            image-name: "auth"
           - service: "OrderAPI"
-            image-name: "OrderAPI-Latest"
+            image-name: "orderapi"
 
     steps:
     - name: Checkout code
@@ -32,13 +66,13 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
 
-    - name: Build Docker Image
-      run: docker build -t abdulqal/fontys-air:${{ matrix.image-name }} "./${{ matrix.service }}"
+    - name: Build Docker Image for ${{ matrix.service }}
+      run: docker build -t abdulqal/${{ matrix.image-name }}:latest "./${{ matrix.service }}"
 
     - name: Log in to Docker Hub
       env:
         DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_TOKEN }}
       run: echo "$DOCKER_ACCESS_TOKEN" | docker login -u abdulqal --password-stdin
 
-    - name: Push Docker Image
-      run: docker push abdulqal/fontys-air:${{ matrix.image-name }}
+    - name: Push Docker Image for ${{ matrix.service }}
+      run: docker push abdulqal/${{ matrix.image-name }}:latest
